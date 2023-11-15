@@ -4,17 +4,11 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Queries;
-public class ListDaysWorkOfMonth : IRequestHandler<ListDayWorkOfMonthCommand>
+public class ListDaysWorkOfMonth(AppSettings appSettings, IDayStorage dayStorage, IConsoleWrite consoleWrite) : IRequestHandler<ListDayWorkOfMonthCommand>
 {
-    private WorkDay WorkDay { get; }
-    private IDayStorage DayStorage { get; }
-    private IConsoleWrite ConsoleWrite { get; }
-    public ListDaysWorkOfMonth(AppSettings appSettings, IDayStorage dayStorage, IConsoleWrite consoleWrite)
-    {
-        WorkDay = appSettings.WorkDay;
-        DayStorage = dayStorage;
-        ConsoleWrite = consoleWrite;
-    }
+    private WorkDay WorkDay { get; } = appSettings.WorkDay;
+    private IDayStorage DayStorage { get; } = dayStorage;
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
 
     public async Task Handle(ListDayWorkOfMonthCommand request, CancellationToken cancellationToken)
     {

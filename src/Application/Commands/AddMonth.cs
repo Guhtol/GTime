@@ -7,7 +7,7 @@ namespace Application.Commands;
 public class AddMonth : IRequestHandler<AddMonthCommand>
 {
     private IConsoleWrite ConsoleWrite { get; }
-    private List<TimeOnly> BaseHours { get; } = new List<TimeOnly>();
+    private List<TimeOnly> BaseHours { get; } = [];
     private IDayStorage DayStorage { get; }
 
     public AddMonth(IConsoleWrite consoleWrite, AppSettings appSettings, IDayStorage dayStorage)

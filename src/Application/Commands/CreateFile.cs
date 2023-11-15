@@ -4,17 +4,12 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Commands;
-public class CreateFile : IRequestHandler<CreateFileCommand>
+public class CreateFile(IConsoleWrite consoleWrite, IDayStorage dayStorage, AppSettings appSettings) : IRequestHandler<CreateFileCommand>
 {
-    private IConsoleWrite ConsoleWrite { get; }
-    private IDayStorage DayStorage { get; }
-    private readonly string pathFile; 
-    public CreateFile(IConsoleWrite consoleWrite, IDayStorage dayStorage, AppSettings appSettings)
-    {
-        ConsoleWrite = consoleWrite;
-        DayStorage = dayStorage;
-        pathFile = appSettings.PathFile;
-    }
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
+    private IDayStorage DayStorage { get; } = dayStorage;
+    private readonly string pathFile = appSettings.PathFile;
+
 
     public async Task Handle(CreateFileCommand request, CancellationToken cancellationToken)
     {

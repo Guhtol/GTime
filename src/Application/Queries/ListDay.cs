@@ -4,16 +4,10 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Queries;
-public class ListDay : IRequestHandler<ListDayCommand>
+public class ListDay(IDayStorage dayStorage, IConsoleWrite consoleWrite) : IRequestHandler<ListDayCommand>
 {
-    private IDayStorage DayStorage { get; }
-    private IConsoleWrite ConsoleWrite { get; }
-    public ListDay(IDayStorage dayStorage, IConsoleWrite consoleWrite)
-    {
-        DayStorage = dayStorage;
-        ConsoleWrite = consoleWrite;
-
-    }
+    private IDayStorage DayStorage { get; } = dayStorage;
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
 
     public async Task Handle(ListDayCommand request, CancellationToken cancellationToken)
     {

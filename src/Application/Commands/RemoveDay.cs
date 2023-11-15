@@ -3,17 +3,10 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Commands;
-public class RemoveDay : IRequestHandler<RemoveDayCommand>
+public class RemoveDay(IConsoleWrite consoleWrite, IDayStorage dayStorage) : IRequestHandler<RemoveDayCommand>
 {
-    private IConsoleWrite ConsoleWrite { get; }
-    private IDayStorage DayStorage { get; }
-
-    public RemoveDay(IConsoleWrite consoleWrite, IDayStorage dayStorage)
-    {
-        ConsoleWrite = consoleWrite;
-        DayStorage = dayStorage;
-
-    }
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
+    private IDayStorage DayStorage { get; } = dayStorage;
 
 
     public async Task Handle(RemoveDayCommand request, CancellationToken cancellationToken)

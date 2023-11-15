@@ -1,5 +1,5 @@
 namespace Application.SeedWork;
-public struct CommandName
+public readonly struct CommandName
 {
     private readonly string? _value;
 

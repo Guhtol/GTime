@@ -1,35 +1,30 @@
 using System.Text;
 
 namespace Application.Domain;
-public class NewFileStream
+public class NewFileStream(string path)
 {
-    private string Path { get; }
+    private string Path { get; } = !string.IsNullOrEmpty(path) ? path : AppDomain.CurrentDomain.BaseDirectory;
 
-    public NewFileStream(string path)
-    {
-        Path = path;
-    }
-
-    public async Task CreateAsync(IEnumerable<Day> dais)
+    public async Task CreateAsync(IEnumerable<Day> daies)
     {
         using StreamWriter sw = new(File.Create(Path), Encoding.UTF8);
         await sw.WriteAsync(";Lançamento Gtime;");
         await sw.WriteLineAsync("\n Dia;Entrada;Saída;Total");
         TimeSpan totalMonth = new();
-        List<string> listTotal = new();
+        List<string> listTotal = [];
 
-        foreach (var item in dais)
+        foreach (var item in daies)
         {
             totalMonth += await WriteFileAndReturnTotalAsync(sw, item, listTotal);
         }
-        
+
         //TODO trocar para async
         sw.WriteLine("\n Dia;Total Horário;\n");
         listTotal.ForEach(sw.WriteLine);
         sw.WriteLine("Total;{0:00}:{1:00};", (int)totalMonth.TotalHours, totalMonth.Minutes);
     }
 
-    private async Task<TimeSpan> WriteFileAndReturnTotalAsync(StreamWriter sw, Day day, List<string> listTotalDay)
+    private static async Task<TimeSpan> WriteFileAndReturnTotalAsync(StreamWriter sw, Day day, List<string> listTotalDay)
     {
 
         var last = new TimeOnly();

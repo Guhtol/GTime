@@ -3,12 +3,8 @@ using Application.Data;
 using Application.SeedWork;
 
 namespace Infrastructure.Data;
-public class DayStorage : DataBaseStandard, IDayStorage
+public class DayStorage(IDbConnection dbConnection) : DataBaseStandard(dbConnection), IDayStorage
 {
-    public DayStorage(IDbConnection dbConnection) : base(dbConnection)
-    {
-    }
-
     public async Task<int> Add(DateTime dateTime)
     {
         const string sql = @"INSERT INTO Day (Date) Values (:dateTime)";

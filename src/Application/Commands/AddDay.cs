@@ -3,16 +3,10 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Commands;
-public class AddDay : IRequestHandler<AddDayCommand>
+public class AddDay(IConsoleWrite consoleWrite, IDayStorage dayStorage) : IRequestHandler<AddDayCommand>
 {
-    private IConsoleWrite ConsoleWrite { get; }
-    private IDayStorage DayStorage { get; }
-    public AddDay(IConsoleWrite consoleWrite, IDayStorage dayStorage)
-    {
-        ConsoleWrite = consoleWrite;
-        DayStorage = dayStorage;
-
-    }
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
+    private IDayStorage DayStorage { get; } = dayStorage;
 
     public async Task Handle(AddDayCommand request, CancellationToken cancellationToken)
     {

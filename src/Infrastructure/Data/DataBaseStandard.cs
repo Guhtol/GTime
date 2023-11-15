@@ -2,14 +2,9 @@ using System.Data;
 using Dapper;
 
 namespace Infrastructure.Data;
-public class DataBaseStandard : IDisposable
+public class DataBaseStandard(IDbConnection dbConnection) : IDisposable
 {
-    protected IDbConnection DbConnection { get; }
-
-    public DataBaseStandard(IDbConnection dbConnection)
-    {
-        DbConnection = dbConnection;
-    }
+    protected IDbConnection DbConnection { get; } = dbConnection;
 
     public async Task<int> ExecuteCommandAsync(string sql, object paramaters)
     {

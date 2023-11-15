@@ -2,17 +2,10 @@ using Application.SeedWork;
 using MediatR;
 
 namespace Application.Commands;
-public class RunApplication : IRequestHandler<RunApplicationCommand>
+public class RunApplication(IConsoleWrite consoleWrite, IMediator mediator) : IRequestHandler<RunApplicationCommand>
 {
-    private IConsoleWrite ConsoleWrite { get; }
-    private IMediator Mediator { get; }
-
-    public RunApplication(IConsoleWrite consoleWrite, IMediator mediator)
-    {
-        ConsoleWrite = consoleWrite;
-        Mediator = mediator;
-
-    }
+    private IConsoleWrite ConsoleWrite { get; } = consoleWrite;
+    private IMediator Mediator { get; } = mediator;
 
     public async Task Handle(RunApplicationCommand request, CancellationToken cancellationToken)
     {
